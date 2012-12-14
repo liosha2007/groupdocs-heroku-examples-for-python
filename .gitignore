@@ -1,1 +1,3 @@
 /venv
+/inc_samples/*.pyc
+*.pyc

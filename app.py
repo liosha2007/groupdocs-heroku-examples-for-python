@@ -45,7 +45,7 @@ if __name__ == '__main__':
     config.add_view(sample9.sample9, route_name='sample9')
     config.add_view(sample10.sample10, route_name='sample10')
         
-    config.add_static_view(name='/', path='templates/')
+    config.add_static_view(name='/static/', path='static/')
     app = config.make_wsgi_app()
     server = make_server('0.0.0.0', int(os.environ.get('PORT', '8080')), app)
     server.serve_forever()

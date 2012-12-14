@@ -1,4 +1,4 @@
-import base64
+import os, base64
 from pyramid.renderers import render_to_response
 
 from groupdocs.ApiClient import ApiClient
@@ -11,23 +11,23 @@ def IsNotNull(value):
 
 # Sample 1
 def sample1(request):
-    clientId = request.POST.get('client_id')
-    privateKey = request.POST.get('private_key')
+    clientId = os.environ['GROUPDOCS_CID']
+    privateKey = os.environ['GROUPDOCS_PKEY']
+    #serviceUrl = os.environ['GROUPDOCS_URL']
 
     if IsNotNull(clientId) == False or IsNotNull(privateKey) == False:
-        return render_to_response('__main__:templates/sample1.pt', 
-                                  { 'error' : 'You do not enter you User id or Private key' })
+        return render_to_response('__main__:templates/sample1.pt', { 'errmsg' : 'User id or Private key not found!' })
 
     signer = GroupDocsRequestSigner(privateKey)
     apiClient = ApiClient(signer)
     api = MgmtApi(apiClient)
 
     try:
-		userInfo = api.GetUserProfile(clientId)
+        userInfo = api.GetUserProfile(clientId)
         
     except Exception, e:
         return render_to_response('__main__:templates/sample1.pt', 
-                                  { 'error' : str(e) })
+                                  { 'errmsg' : str(e) })
 
     return render_to_response('__main__:templates/sample1.pt', 
                               { 'userId' : clientId, 
