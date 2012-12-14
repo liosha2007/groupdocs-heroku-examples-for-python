@@ -19,7 +19,7 @@
 		</div>
         <div class="container">
             <div class="hero-unit">
-	            <h2>GroupDocs Java SDK Samples for <a href="http://www.heroku.com/" target="_blank">heroku</a> add-on.</h2>
+	            <h2>GroupDocs Python SDK Samples for <a href="http://www.heroku.com/" target="_blank">heroku</a> add-on.</h2>
 				<ul class="nav nav-pills nav-stacked">
 		            <li><a href="/">Home Page</a></li>
 		            <li><a href="/sample1">1 - How to login to GroupDocs using the API</a></li>
@@ -35,7 +35,7 @@
 				</ul>
                 <p>
 					<p>
-						<div class="alert alert-info">This sample will show how to use Signer object to be authorized at GroupDocs and how to get GroupDocs user infromation using Java SDK</div>
+						<div class="alert alert-info">This sample will show how to use StorageApi to list all user files from GroupDocs account using Python SDK</div>
 					</p>
 					<p tal:condition="exists:errmsg">
 						<span class="label label-important">${errmsg|''}</span>

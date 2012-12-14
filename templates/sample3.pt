@@ -3,57 +3,69 @@
     xmlns:metal="http://xml.zope.org/namespaces/metal"
     use-macro="load: layout.pt">
     <tal:block metal:fill-slot="content">
-		
-<h3 style="text-align:center;"><a href="/index.php">GroupDocs Python SDK Samples</a> - Sample3</h3>
+		<div class="navbar navbar-inverse navbar-fixed-top">
+		    <div class="navbar-inner">
+		        <div class="container">
+		            <a class="brand" href="http://www.groupdocs.com">GroupDocs</a>
+		            <div class="nav-collapse collapse">
+		                <ul class="nav">
+		                    <li class="active"><a href="/">Home</a></li>
+		                    <li><a href="/contact">Contact</a></li>
+		                    <li><a href="/about">About</a></li>
+		                </ul>
+		            </div>
+		        </div>
+		    </div>
+		</div>
+        <div class="container">
+            <div class="hero-unit">
+	            <h2>GroupDocs Python SDK Samples for <a href="http://www.heroku.com/" target="_blank">heroku</a> add-on.</h2>
+				<ul class="nav nav-pills nav-stacked">
+		            <li><a href="/">Home Page</a></li>
+		            <li><a href="/sample1">1 - How to login to GroupDocs using the API</a></li>
+		            <li><a href="/sample2">2 - How to list files within GroupDocs Storage using the Storage API</a></li>
+		            <li class="active"><a href="/sample3">3 - How to upload a file to GroupDocs using the Storage API</a></li>
+		            <li><a href="/sample4">4 - How to upload a file to GroupDocs using the Storage API</a></li>
+		            <li><a href="/sample5">5 - How to copy / move a file using the GroupDocs Storage API</a></li>
+		            <li><a href="/sample6">6 - How to add a Signature to a document in GroupDocs Signature</a></li>
+		            <li><a href="/sample7">7 - How to create a list of thumbnails for a document</a></li>
+		            <li><a href="/sample8">8 - How to return a URL representing a single page of a Document</a></li>
+		            <li><a href="/sample9">9 - How to generate an embedded Viewer URL for a Document</a></li>
+		            <li><a href="/sample10">10 - How to share a document to other users</a></li>
+				</ul>
+                <p>
+					<p>
+						<div class="alert alert-info">This sample will show how to use StorageApi to upload test file to GroupDocs account using Python SDK</div>
+					</p>
+					<p tal:condition="exists:errmsg">
+						<span class="label label-important">${errmsg}</span>
+					</p>
+					<form action="/sample3" method="POST" enctype="multipart/form-data">
+						<input type="file" name="fileData" />
+						
+						<input type="submit" value="Submit" class="btn" />
+					</form>
+					<ul tal:condition="exists:filename" class="nav nav-tabs nav-stacked">
+						<li><a>
+							<span class="label">File Name:</span> ${filename|''}
+						</a></li>
+						<li><a>
+							<span class="label">File Guid:</span> ${guid|''}
+						</a></li>
+					</ul>
+					<div tal:condition="exists:guid">
+						<iframe src="https://apps.groupdocs.com/document-viewer/embed/${guid|''}" frameborder="0" width="720" height="600"></iframe>
+						<p>File was uploaded to GroupDocs. Here you can see your <strong>${filename|''}</strong> file in the GroupDocs Embedded Viewer.</p>
 
-<div class='samplecontent' style="padding:10px;">
-   <i>This sample will show how to use StorageApi to upload file at GroupDocs using PHP SDK</i> <br/>
-   
-   <br/><p>You entered: 
-   <p>UserId = ${userId|''}
-   <p>PrivateKey = ${privateKey|''}
-   <p><font color="red">${error|''}</font>
-   <br/>
-   <div id="requestForm" style="padding:20px; border:1px solid black;">
-   <p> Enter data for request and press "Make request" button </p>
-   <form action="/sample3" method = "post" enctype = 'multipart/form-data'>
-        <label for='client_id'>GroupDocs Client ID</label>
-        <br />
-        <input type='text', name='client_id' />
-        <br />
-        <label for='private_key'>GroupDocs Private Key</label>
-        <br />
-        <input type='text', name='private_key' />
-        <br />
-        <label for='file'>File</label>
-        <br />
-        <input type='file' name='file' id='file'  />
-        <br /><br />
-        <input type='submit' value='Upload'/>
-     </form>
-    </div>
-    <div  style="padding:20px; border:1px solid black;">
-        <p> Results: </p>
-        ${structure:massage|''}
-        ${structure:iframe|''}
-    </div>
-</div>
+					</div>
+                </p>
+            </div>
 
-<div style="padding:10px;">
-Choose anothe one sample:
-<ul>
-    <li> <a href="/sample1">Sample1 - How to login to GroupDocs using the API</li>
-    <li> <a href="/sample2">Sample2 - How to list files within GroupDocs Storage using the Storage API</li>
-    <li> <a href="/sample3">Sample3 - How to upload a file to GroupDocs using the Storage API</li>
-    <li> <a href="/sample4">Sample4 - How to download a file from GroupDocs Storage using the Storage API</li>
-    <li> <a href="/sample5">Sample5 - How to copy / move a file using the GroupDocs Storage API</li>
-    <li> <a href="/sample6">Sample6 - How to add a Signature to a document in GroupDocs Signature</li>
-    <li> <a href="/sample7">Sample7 - How to create a list of thumbnails for a document</li>
-    <li> <a href="/sample8">Sample8 - How to return a URL representing a single page of a Document</li>
-    <li> <a href="/sample9">Sample9 - How to generate a embedded Viewer URL for a DocumentI</li>
-    <li> <a href="/sample10">Sample10 - How to share a document to other users</li>
-</ul>
-</div>
+            <hr />
+
+            <footer>
+                <p>&copy; GroupDocs 2012</p>
+            </footer>
+        </div> <!-- /container -->
     </tal:block>
 </metal:main>
-
