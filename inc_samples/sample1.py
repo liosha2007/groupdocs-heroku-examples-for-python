@@ -1,4 +1,4 @@
-import os, base64
+import os
 from pyramid.renderers import render_to_response
 
 from groupdocs.ApiClient import ApiClient
@@ -30,8 +30,5 @@ def sample1(request):
                                   { 'errmsg' : str(e) })
 
     return render_to_response('__main__:templates/sample1.pt', 
-                              { 'userId' : clientId, 
-                               'privateKey' : privateKey, 
-                               'userInfo' : userInfo.result.user
-                              }, 
+                              { 'userInfo' : userInfo.result.user }, 
                               request=request)

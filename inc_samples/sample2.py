@@ -1,4 +1,4 @@
-import base64
+import os
 
 from pyramid.renderers import render_to_response
 
@@ -12,12 +12,12 @@ def IsNotNull(value):
 
 # Sample 2
 def sample2(request):
-    clientId = request.POST.get('client_id')
-    privateKey = request.POST.get('private_key')
+    clientId = os.environ['GROUPDOCS_CID']
+    privateKey = os.environ['GROUPDOCS_PKEY']
+    #serviceUrl = os.environ['GROUPDOCS_URL']
     
     if IsNotNull(clientId) == False or IsNotNull(privateKey) == False:
-        return render_to_response('__main__:templates/sample2.pt', 
-                                  { 'error' : 'You do not enter you User id or Private key' })
+        return render_to_response('__main__:templates/sample2.pt', { 'errmsg' : 'User id or Private key not found!' })
 
     signer = GroupDocsRequestSigner(privateKey)
     apiClient = ApiClient(signer)
@@ -25,17 +25,14 @@ def sample2(request):
 
     try:
         files = api.ListEntities(userId = clientId, path = '', pageIndex = 0)
-        names = ''
+        names = []
         for item in files.result.files: #selecting file names
-           names += item.name + '<br>'
+            names.append(item.name)
         #~ import pdb; pdb.set_trace()
     except Exception, e:
         return render_to_response('__main__:templates/sample2.pt', 
                                   { 'error' : str(e) })
 
     return render_to_response('__main__:templates/sample2.pt', 
-                              { 'userId' : clientId, 
-                               'privateKey' : privateKey, 
-                               'names' : names
-                              }, 
+                              { 'names' : names }, 
                               request=request)
