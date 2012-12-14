@@ -37,6 +37,9 @@
 					<p>
 						<div class="alert alert-info">This sample will show how to Copy/Move particular file in your GroupDocs account using Python SDK</div>
 					</p>
+					<p tal:condition="exists:errmsg">
+						<span class="label label-important">${errmsg|''}</span>
+					</p>
 					<form action="/sample5" method="POST" enctype="multipart/form-data">
 						<div class="input-append">
 							<label for="srcPathId">Source Path </label>

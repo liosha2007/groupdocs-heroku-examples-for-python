@@ -32,7 +32,6 @@ def sample5(request):
         docApi = DocApi(apiClient)
         srcFile = docApi.GetDocumentMetadataByPath(clientId, srcPath)
         
-        fileName = srcFile.result.last_view.document.name
         fileID = int(srcFile.result.last_view.document.id)
 
         if action == 'copy':
