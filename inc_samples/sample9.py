@@ -1,4 +1,3 @@
-import base64
 
 from pyramid.renderers import render_to_response
 
@@ -12,14 +11,12 @@ def sample9(request):
     width = request.POST.get('width') or '300'
     height = request.POST.get('height') or '200'
     if IsNotNull(fileGuId) == False:
-        return render_to_response('__main__:templates/sample9.pt', 
-                                  { 'error' : 'You do not enter all parameters' })
+        return render_to_response('__main__:templates/sample9.pt', { })
 
     iframe_url = 'https://apps.groupdocs.com/document-viewer/embed/' + fileGuId + '?frameborder=0&width=' + width + '&height=' + height
 
     return render_to_response('__main__:templates/sample9.pt',
-                              { 
-                               'iframe_url' : iframe_url,
+                              { 'iframe_url' : iframe_url,
                                'fileId' : fileGuId,
                                'width' : width,
                                'height' : height },
