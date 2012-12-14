@@ -37,7 +37,7 @@ def sample3(request):
         response = api.Upload(clientId, inputFile.filename, fs)
     except Exception, e:
         return render_to_response('__main__:templates/sample3.pt', 
-                                  { 'error' : str(e) })
+                                  { 'errmsg' : str(e) })
 
     return render_to_response('__main__:templates/sample3.pt', 
                               { 'guid' : response.result.guid, 'filename' : inputFile.filename }, 

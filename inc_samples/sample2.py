@@ -31,7 +31,7 @@ def sample2(request):
         #~ import pdb; pdb.set_trace()
     except Exception, e:
         return render_to_response('__main__:templates/sample2.pt', 
-                                  { 'error' : str(e) })
+                                  { 'errmsg' : str(e) })
 
     return render_to_response('__main__:templates/sample2.pt', 
                               { 'names' : names }, 

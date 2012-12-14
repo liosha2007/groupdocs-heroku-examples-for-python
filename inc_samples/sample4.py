@@ -1,11 +1,9 @@
-import base64
 import os
 import shutil
 from pyramid.renderers import render_to_response
 
 from groupdocs.ApiClient import ApiClient
 from groupdocs.StorageApi import StorageApi
-from groupdocs.FileStream import FileStream
 from groupdocs.GroupDocsRequestSigner import GroupDocsRequestSigner
 
 # Checking value on null
@@ -14,14 +12,13 @@ def IsNotNull(value):
 
 # Sample 4
 def sample4(request):
-    clientId = request.POST.get('client_id')
-    privateKey = request.POST.get('private_key')
-    
-    file_id = request.POST.get('file_id')
+    clientId = os.environ['GROUPDOCS_CID']
+    privateKey = os.environ['GROUPDOCS_PKEY']
+    #serviceUrl = os.environ['GROUPDOCS_URL']
+    file_id = request.POST.get('fileId')
 
     if IsNotNull(clientId) == False or IsNotNull(privateKey) == False or IsNotNull(file_id) == False:
-        return render_to_response('__main__:templates/sample4.pt', 
-                                  { 'error' : 'You do not enter all parameters' })
+        return render_to_response('__main__:templates/sample4.pt', { })
 
     signer = GroupDocsRequestSigner(privateKey)
     apiClient = ApiClient(signer)
@@ -31,8 +28,8 @@ def sample4(request):
         
         files = api.ListEntities(userId = clientId, path = '', pageIndex = 0)
         for item in files.result.files: #selecting file names
-           if item.guid == file_id:
-               fileName = item.name
+            if item.guid == file_id:
+                fileName = item.name
                
         currentDir = os.path.dirname(os.path.realpath(__file__))
         
@@ -48,17 +45,13 @@ def sample4(request):
         
             with open(filePath, 'wb') as fp:
                 shutil.copyfileobj(fs.inputStream, fp)
-            
-            massage = '<font color="green">File was downloaded to the <font color="blue">' + filePath + '</font> folder</font> <br />';
         else:
-			raise Exception('Wrong file ID!')
+            raise Exception('Wrong file ID!')
     except Exception, e:
         return render_to_response('__main__:templates/sample4.pt', 
-                                  { 'error' : str(e) })
+                                  { 'errmsg' : str(e) })
 
     return render_to_response('__main__:templates/sample4.pt', 
-                              { 'userId' : clientId, 
-                               'privateKey' : privateKey, 
-                               'file_Id' : file_id, 
-                               'massage' : massage }, 
+                              { 'file_Id' : file_id, 
+                               'filePath' : filePath }, 
                               request=request)
