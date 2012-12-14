@@ -3,74 +3,70 @@
     xmlns:metal="http://xml.zope.org/namespaces/metal"
     use-macro="load: layout.pt">
     <tal:block metal:fill-slot="content">
-
-		<h3 style="text-align:center;">
-			<a href="/">GroupDocs Python SDK Samples</a> - Sample8
-		</h3>
-		
-		<div class='samplecontent' style="padding:10px;">
-		   <i>This sample will show how to return a URL representing a single page of a Document using Python SDK</i> <br/>
-		   
-		   <br/><p>You entered: 
-		   <p>UserId = ${userId|''}</p>
-		   <p>PrivateKey = ${privateKey|''}</p>
-		   <p>File Id = ${fileId|''}</p>
-		   <p>Page number = ${pageNumber|''}</p>
-		   <p><font color="red">${error|''}</font></p>
-		   <div id="requestForm" style="padding:20px; border:1px solid black;">
-		   <p> Enter data for request and press "Make request" button </p>
-		        <form action="/sample8" method = "post" enctype = 'multipart/form-data'>
-		            <label for='client_id'>GroupDocs Client ID</label>
-		            <br />
-		            <input type='text' name='client_id' value="${userId|''}" />
-		            <br />
-		            <label for='private_key'>GroupDocs Private Key</label>
-		            <br />
-		            <input type='text' name='private_key' value="${privateKey|''}" />
-		            <br />
-		            <label for='fileId'>GroupDocs file ID</label>
-		            <br />
-		            <input type='text' name='fileId' value="${fileId|''}" />
-		            <br />
-		            <label for='pageNumber'>GroupDocs page number</label>
-		            <br />
-		            <input type='text' name='pageNumber' value="${pageNumber|''}" />
-		            <br />
-		            <input type='submit' value='Make Request'/>
-		        </form>
-		   </div>
-		   <div  style="padding:20px; border:1px solid black;">
-		        <p> Results: </p>
-		        <table style="border:1px double black;">
-		          <tr>
-		              <th>Field</th><th>Value</th>
-		          </tr>
-		          <tr>
-		               <td>Page URL</td><td>${url|''}</td>
-		          </tr>
-		        </table>
-		        <font color="green">The page you requested:</font> <br />
-		        <img src="${url|''}">
-		   </div>
-		   <br/>
+		<div class="navbar navbar-inverse navbar-fixed-top">
+		    <div class="navbar-inner">
+		        <div class="container">
+		            <a class="brand" href="http://www.groupdocs.com">GroupDocs</a>
+		            <div class="nav-collapse collapse">
+		                <ul class="nav">
+		                    <li class="active"><a href="/">Home</a></li>
+		                    <li><a href="/contact">Contact</a></li>
+		                    <li><a href="/about">About</a></li>
+		                </ul>
+		            </div>
+		        </div>
+		    </div>
 		</div>
-		
-		<div style="padding:10px;">
-		Choose anothe one sample:
-		<ul>
-		    <li> <a href="/sample1">Sample1 - How to login to GroupDocs using the API</li>
-		    <li> <a href="/sample2">Sample2 - How to list files within GroupDocs Storage using the Storage API</li>
-		    <li> <a href="/sample3">Sample3 - How to upload a file to GroupDocs using the Storage API</li>
-		    <li> <a href="/sample4">Sample4 - How to download a file from GroupDocs Storage using the Storage API</li>
-		    <li> <a href="/sample5">Sample5 - How to copy / move a file using the GroupDocs Storage API</li>
-		    <li> <a href="/sample6">Sample6 - How to add a Signature to a document in GroupDocs Signature</li>
-		    <li> <a href="/sample7">Sample7 - How to create a list of thumbnails for a document</li>
-		    <li> <a href="/sample8">Sample8 - How to return a URL representing a single page of a Document</li>
-		    <li> <a href="/sample9">Sample9 - How to generate a embedded Viewer URL for a DocumentI</li>
-		    <li> <a href="/sample10">Sample10 - How to share a document to other users</li>
-		</ul>
-		</div>
+        <div class="container">
+            <div class="hero-unit">
+	            <h2>GroupDocs Python SDK Samples for <a href="http://www.heroku.com/" target="_blank">heroku</a> add-on.</h2>
+				<ul class="nav nav-pills nav-stacked">
+		            <li><a href="/">Home Page</a></li>
+		            <li><a href="/sample1">1 - How to login to GroupDocs using the API</a></li>
+		            <li><a href="/sample2">2 - How to list files within GroupDocs Storage using the Storage API</a></li>
+		            <li><a href="/sample3">3 - How to upload a file to GroupDocs using the Storage API</a></li>
+		            <li><a href="/sample4">4 - How to upload a file to GroupDocs using the Storage API</a></li>
+		            <li><a href="/sample5">5 - How to copy / move a file using the GroupDocs Storage API</a></li>
+		            <li><a href="/sample6">6 - How to add a Signature to a document in GroupDocs Signature</a></li>
+		            <li><a href="/sample7">7 - How to create a list of thumbnails for a document</a></li>
+		            <li class="active"><a href="/sample8">8 - How to return a URL representing a single page of a Document</a></li>
+		            <li><a href="/sample9">9 - How to generate an embedded Viewer URL for a Document</a></li>
+		            <li><a href="/sample10">10 - How to share a document to other users</a></li>
+				</ul>
+                <p>
+					<p>
+						<div class="alert alert-info">This sample will show how to return a URL representing a single page of particular Document in the GroupDocs account using Python SDK</div>
+					</p>
+					<p tal:condition="exists:errmsg">
+						<span class="label label-important">${errmsg|''}</span>
+					</p>
+					<form action="/sample8" method="POST" enctype="multipart/form-data">
+						<div class="input-append">
+							<label for="fileId">File ID</label>
+							<input type="text" name="fileId" id="fileId" /><br />
+							
+							<label for="dimensionId">Dimension</label>
+							<input type="text" name="dimension" id="dimensionId" placeholder="150x150" /><br />
+							
+							<label for="pageNumberId">Page number</label>
+							<input type="text" name="pageNumber" id="pageNumberId" /><br />
+							
+							<input type="submit" value="Submit" class="btn" />
+						</div>
+					</form>
+					<ul tal:condition="exists:thumbnailUrls" class="nav nav-tabs nav-stacked">
+						<li tal:repeat="turl thumbnailUrls"><a>
+							<img src="${turl|''}" alt="Page" />
+						</a></li>
+					</ul>
+                </p>
+            </div>
 
+            <hr />
+
+            <footer>
+                <p>&copy; GroupDocs 2012</p>
+            </footer>
+        </div> <!-- /container -->
     </tal:block>
 </metal:main>
-
