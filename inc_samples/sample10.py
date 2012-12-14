@@ -1,4 +1,4 @@
-import base64
+import os
 
 from pyramid.renderers import render_to_response
 
@@ -13,14 +13,14 @@ def IsNotNull(value):
 
 # Sample 10
 def sample10(request):
-    clientId = request.POST.get('client_id')
-    privateKey = request.POST.get('private_key')
+    clientId = os.environ['GROUPDOCS_CID']
+    privateKey = os.environ['GROUPDOCS_PKEY']
+    #serviceUrl = os.environ['GROUPDOCS_URL']
     fileGuId = request.POST.get('fileId')
     email = request.POST.get('email')
 
     if IsNotNull(clientId) == False or IsNotNull(privateKey) == False or IsNotNull(fileGuId) == False or IsNotNull(email) == False:
-        return render_to_response('__main__:templates/sample10.pt', 
-                                  { 'error' : 'You do not enter all parameters' })
+        return render_to_response('__main__:templates/sample10.pt', { })
 
     signer = GroupDocsRequestSigner(privateKey)
     apiClient = ApiClient(signer)
@@ -29,17 +29,15 @@ def sample10(request):
     try:
         files = api.ListEntities(userId = clientId, path = '', pageIndex = 0)
         for item in files.result.files: #selecting file names
-           if item.guid == fileGuId:
-               fileGuId = item.id
+            if item.guid == fileGuId:
+                fileGuId = item.id
         docApi = DocApi(apiClient)
         docApi.ShareDocument(clientId, fileGuId, body = [ email, ])
     except Exception, e:
         return render_to_response('__main__:templates/sample10.pt', 
-                                  { 'error' : str(e) })
+                                  { 'errmsg' : str(e) })
 
     return render_to_response('__main__:templates/sample10.pt', 
-                              { 'userId' : clientId, 
-                               'privateKey' : privateKey, 
-                               'fileId' : fileGuId, 
+                              { 'fileId' : fileGuId, 
                                'email' : email }, 
                               request=request)
