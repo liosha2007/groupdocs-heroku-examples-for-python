@@ -1,5 +1,4 @@
-import base64
-import json
+import os, json
 
 from pyramid.renderers import render_to_response
 from pyramid.response import Response
@@ -15,19 +14,19 @@ def IsNotNull(value):
 
 # Sample 6
 def sample6(request):
+    clientId = os.environ['GROUPDOCS_CID']
+    privateKey = os.environ['GROUPDOCS_PKEY']
+    #serviceUrl = os.environ['GROUPDOCS_URL']
     if request.content_type != 'application/json':
-        return render_to_response('__main__:templates/sample6.pt', { })
+        return render_to_response('__main__:templates/sample6.pt', { 'clientId' : clientId, 'privateKey' : privateKey })
 
     jsonPostData = request.json_body
     # get parameters
-    clientId = jsonPostData.get("userId")
-    privateKey = jsonPostData.get("privateKey")
     documents = jsonPostData.get('documents')
     signers = jsonPostData.get('signers')
     # checking parameters
     if IsNotNull(clientId) == False or IsNotNull(privateKey) == False or IsNotNull(documents) == False or IsNotNull(signers) == False:
-        return render_to_response('__main__:templates/sample6.pt', 
-                                  { 'error' : 'You do not enter you User id or Private key' })
+        return render_to_response('__main__:templates/sample6.pt', { })
 
     for signer in signers:
         signer['placeSingatureOn'] = ''
@@ -50,4 +49,4 @@ def sample6(request):
         return Response(body = return_data, content_type = 'application/json')
     
     return render_to_response('__main__:templates/sample6.pt', 
-                          { 'error' : response.error_message })
+                          { 'errmsg' : response.error_message })
