@@ -1,4 +1,4 @@
-import base64
+import os
 
 from pyramid.renderers import render_to_response
 
@@ -13,17 +13,16 @@ def IsNotNull(value):
 
 # Sample 5
 def sample5(request):
-    clientId = request.POST.get('client_id')
-    privateKey = request.POST.get('private_key')
+    clientId = os.environ['GROUPDOCS_CID']
+    privateKey = os.environ['GROUPDOCS_PKEY']
+    #serviceUrl = os.environ['GROUPDOCS_URL']
     srcPath = request.POST.get('srcPath')
-    destPath = request.POST.get('destPath')
-    copy = request.POST.get('copy')
-    move = request.POST.get('move')
+    dstPath = request.POST.get('dstPath')
+    action = request.POST.get('action')
 
 
-    if IsNotNull(clientId) == False or IsNotNull(privateKey) == False or IsNotNull(srcPath) == False or IsNotNull(destPath) == False:
-        return render_to_response('__main__:templates/sample5.pt', 
-                                  { 'error' : 'You do not enter all parameters' })
+    if IsNotNull(action) == False or IsNotNull(srcPath) == False or IsNotNull(dstPath) == False:
+        return render_to_response('__main__:templates/sample5.pt', { })
 
     signer = GroupDocsRequestSigner(privateKey)
     apiClient = ApiClient(signer)
@@ -36,19 +35,17 @@ def sample5(request):
         fileName = srcFile.result.last_view.document.name
         fileID = int(srcFile.result.last_view.document.id)
 
-        if copy:
-           file = api.MoveFile(clientId, destPath, Groupdocs_Copy = fileID)
+        if action == 'copy':
+            newfile = api.MoveFile(clientId, dstPath, Groupdocs_Copy = fileID)
 
-        if move:
-           file = api.MoveFile(clientId, destPath, Groupdocs_Move = fileID)
-
+        if action == 'move':
+            newfile = api.MoveFile(clientId, dstPath, Groupdocs_Move = fileID)
     except Exception, e:
         return render_to_response('__main__:templates/sample5.pt', 
-                                  { 'error' : str(e) })
+                                  { 'errmsg' : str(e) })
 
     return render_to_response('__main__:templates/sample5.pt', 
-                              { 'userId' : clientId, 
-                               'privateKey' : privateKey, 
-                               'destPath' : destPath, 
-                               'srcPath' : srcPath }, 
+                              { 'dstPath' : dstPath, 
+                               'srcPath' : srcPath,
+                               'newfile' : newfile }, 
                               request=request)
