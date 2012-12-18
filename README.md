@@ -40,4 +40,4 @@ Deploy your code:
     $ git push heroku master
 
 ## Live running app
-This sample app is also running live on Heroku. To view and try, please open [http://groupdocs-heroku-examples-for-python.herokuapp.com/](http://groupdocs-heroku-examples-for-python.herokuapp.com/).
+This sample app is also running live on Heroku. To view and try, please open [http://groupdocs-heroku-python-exmpls.herokuapp.com/](http://groupdocs-heroku-python-exmpls.herokuapp.com/).
